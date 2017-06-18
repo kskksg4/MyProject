@@ -1,17 +1,23 @@
 package com.kekstudio.dachshundtablayoutsample;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
+import android.widget.Toast;
 
 import com.kekstudio.dachshundtablayout.DachshundTabLayout;
 import com.kekstudio.dachshundtablayout.HelperUtils;
@@ -39,6 +45,9 @@ public class SampleActivity extends AppCompatActivity {
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("애니몰리");
+
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new Fragment01(), "Category01");
@@ -49,6 +58,27 @@ public class SampleActivity extends AppCompatActivity {
         tabLayout = (DachshundTabLayout) findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
 
+    }
+
+    // 액션바 Search
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.actionbar_menu, menu);
+
+        return true;
+    }
+
+    // 액션바 Search 클릭
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.actionbar_search:
+                actionBarSearchIntent();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public void onClickDachshund(View view){
@@ -113,5 +143,9 @@ public class SampleActivity extends AppCompatActivity {
         }
     }
 
+    public void actionBarSearchIntent(){
+        Intent intent = new Intent(this, actionbarSearchIntent.class);
+        startActivity(intent);
+    }
 
 }

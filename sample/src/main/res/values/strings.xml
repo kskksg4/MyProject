@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">Dachshund Tab Layout</string>
+    <string name="app_name">애니몰리</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="actionbar_search">Actionbar Search</string>
 </resources>
