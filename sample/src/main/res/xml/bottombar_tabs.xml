@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <tabs>
+        <tab
+            id="@+id/tab_nearby"
+            icon="@drawable/ic_nearby"
+            title="내위치" />
+        <tab
+            id="@+id/tab_friends"
+            icon="@drawable/ic_mypage"
+            title="마이페이지" />
+    </tabs>
+
+</PreferenceScreen>
