@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -36,14 +37,25 @@ public class Fragment01 extends Fragment {
         View view = inflater.inflate(R.layout.fragment01, null);
 
         RecyclerView myRecycler = (RecyclerView) view.findViewById(R.id.myRecycler);
-        LinearLayoutManager manager = new LinearLayoutManager(getActivity()); // ListView를 쓰기위해 LinearLayoutManager를 사용
-        manager.setOrientation(LinearLayoutManager.VERTICAL); // ListView의 orirentation값인가?
+        GridLayoutManager manager = new GridLayoutManager(getActivity(), 2); // ListView를 쓰기위해 LinearLayoutManager를 사용
+//        manager.setOrientation(LinearLayoutManager.VERTICAL); // ListView의 orirentation값인가?
         myRecycler.setLayoutManager(manager); // RecyclerView에 붙이는 것이다 ListView로 사용한다는 의미
         myRecycler.setHasFixedSize(true); // RecyclerView의 사이즈를 고정시키는것 같다 http://itpangpang.xyz/31
 
         final List<String> content = new ArrayList<String>(); // content라는 변수에 리스트형 배열 객체를 생성하고
         for (int i = 0; i < 30; i++)
             content.add(getListString(i));
+
+        // 그리드뷰의 span을 합쳐주거나 2개
+        manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if(position == 0){
+                    return 2;
+                }
+                return 1;
+            }
+        });
 
 
         ParallaxRecyclerAdapter<String> stringAdapter = new ParallaxRecyclerAdapter<String>(content);
