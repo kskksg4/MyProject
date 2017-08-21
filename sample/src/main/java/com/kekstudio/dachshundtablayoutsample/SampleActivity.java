@@ -36,6 +36,8 @@ import java.util.List;
 
 public class SampleActivity extends AppCompatActivity {
 
+    private static final int LOCATION_INTENT = 1;
+
     private ViewPager viewPager;
     private DachshundTabLayout tabLayout;
     int oncreateBottomSelect = 0;
@@ -73,7 +75,7 @@ public class SampleActivity extends AppCompatActivity {
                             oncreateBottomSelect = 1;
                             break;
                         }
-                        Toast.makeText(getApplicationContext(), "a", Toast.LENGTH_SHORT).show();
+                        bottombarLocationClick();
                         break;
                     case R.id.tab_account:
                         Toast.makeText(getApplicationContext(), "b", Toast.LENGTH_SHORT).show();
@@ -89,7 +91,7 @@ public class SampleActivity extends AppCompatActivity {
             public void onTabReSelected(int tabId) {
                 switch(tabId){
                     case R.id.tab_nearby:
-                        Toast.makeText(getApplicationContext(), "a", Toast.LENGTH_SHORT).show();
+                        bottombarLocationClick();
                         break;
                     case R.id.tab_account:
                         Toast.makeText(getApplicationContext(), "b", Toast.LENGTH_SHORT).show();
@@ -153,8 +155,7 @@ public class SampleActivity extends AppCompatActivity {
     }
 
     public class PagerAdapter extends FragmentStatePagerAdapter {
-        Context mContext;
-
+//        Context mContext;
 
         private final List<Fragment> mFragments = new ArrayList<>();
         private final List<String> mFragmentTitles = new ArrayList<>();
@@ -187,6 +188,11 @@ public class SampleActivity extends AppCompatActivity {
     public void actionBarSearchIntent(){
         Intent intent = new Intent(this, actionbarSearchIntent.class);
         startActivity(intent);
+    }
+
+    public void bottombarLocationClick(){
+        Intent intent = new Intent(SampleActivity.this, BottomBarLocation.class);
+        startActivityForResult(intent, LOCATION_INTENT);
     }
 
 }
