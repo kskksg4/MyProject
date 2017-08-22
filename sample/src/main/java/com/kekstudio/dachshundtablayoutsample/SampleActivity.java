@@ -191,7 +191,7 @@ public class SampleActivity extends AppCompatActivity {
     }
 
     public void bottombarLocationClick(){
-        Intent intent = new Intent(SampleActivity.this, BottomBarLocation.class);
+        Intent intent = new Intent(SampleActivity.this, LocationMain.class);
         startActivityForResult(intent, LOCATION_INTENT);
     }
 

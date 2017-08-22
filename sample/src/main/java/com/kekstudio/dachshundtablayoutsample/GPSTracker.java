@@ -166,7 +166,7 @@ public class GPSTracker extends Service implements LocationListener {
     }
 
     @Override
-    public void onLocationChanged(Location location) { // 한 번쓰고 액티비티를 끌거면 이게 필요한가?
+    public void onLocationChanged(Location location) { // 한 번 쓰고 액티비티를 끌거면 이게 필요한가?
         double lat = location.getLatitude();
         double lon = location.getLongitude();
 

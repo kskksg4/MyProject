@@ -13,14 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".actionbarSearchIntent" />
-        <activity android:name=".BottomBarLocation" />
-        <activity android:name="com.kekstudio.dachshundtablayoutsample.SampleActivity">
+        <activity android:name=".LocationMain" />
+        <activity android:name=".SampleActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--<activity android:name=".SearchLocation"></activity>-->
     </application>
 
 </manifest>

@@ -27,7 +27,8 @@
                 custom:ddAnimatedIndicator="dachshund"
                 custom:ddIndicatorHeight="6dp"
                 custom:ddIndicatorColor="@android:color/white"
-                custom:tabMode="scrollable"/>
+                custom:tabMode="fixed"/>
+            <!-- tabmode는 스크롤이 필요하면 scrollable, 일정 비율로 한 화면에 전체는 fixed -->
 
         </android.support.design.widget.AppBarLayout>
 
