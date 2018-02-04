@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kekstudio.dachshundtablayout.DachshundTabLayout;
@@ -40,7 +41,9 @@ public class SampleActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
     private DachshundTabLayout tabLayout;
+
     int oncreateBottomSelect = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +53,8 @@ public class SampleActivity extends AppCompatActivity {
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         BottomBar bottomBar = (BottomBar)findViewById(R.id.bottomBar);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("애니몰리");
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.setTitle("애니몰리");
 
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
@@ -106,23 +109,37 @@ public class SampleActivity extends AppCompatActivity {
     // 액션바 Search
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.actionbar_menu, menu);
+//        MenuInflater inflater = getMenuInflater();
+        ActionBar actionBar = getSupportActionBar();
+
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowHomeEnabled(false);
+
+        LayoutInflater inflater = (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
+        View actionBarView = inflater.inflate(R.layout.actionbar_custom, null);
+
+        actionBar.setCustomView(actionBarView);
+
+        Toolbar parent = (Toolbar)actionBarView.getParent();
+        parent.setContentInsetsAbsolute(50, 50);
+//        inflater.inflate(R.menu.actionbar_menu, menu);
 
         return true;
     }
 
     // 액션바 Search 클릭
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
-            case R.id.actionbar_search:
-                actionBarSearchIntent();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch(item.getItemId()){
+//            case R.id.actionbar_search:
+//                actionBarSearchIntent();
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
 
     public void onClickDachshund(View view){
         tabLayout.setAnimatedIndicator(new DachshundIndicator(tabLayout));
@@ -185,7 +202,7 @@ public class SampleActivity extends AppCompatActivity {
         }
     }
 
-    public void actionBarSearchIntent(){
+    public void actionBarSearchIntent(View v){
         Intent intent = new Intent(this, actionbarSearchIntent.class);
         startActivity(intent);
     }
@@ -193,6 +210,28 @@ public class SampleActivity extends AppCompatActivity {
     public void bottombarLocationClick(){
         Intent intent = new Intent(SampleActivity.this, LocationMain.class);
         startActivityForResult(intent, LOCATION_INTENT);
+    }
+
+    public void actionbar_bottombarLocationClick(View v){
+        Intent intent = new Intent(SampleActivity.this, LocationMain.class);
+        startActivityForResult(intent, LOCATION_INTENT);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == LOCATION_INTENT){
+            if(resultCode == RESULT_OK){
+                if(data.hasExtra("arg2")){
+                    String arg2 = data.getStringExtra("arg2");
+                    ((TextView)findViewById(R.id.main_address_text)).setText(arg2);
+                }else if(data.hasExtra("locationThoroughfareAddress")){
+                    String locationThoroughfareAddress = data.getStringExtra("locationThoroughfareAddress");
+                    ((TextView)findViewById(R.id.main_address_text)).setText(locationThoroughfareAddress);
+                }
+            }
+        }
     }
 
 }

@@ -1,6 +1,8 @@
 package com.kekstudio.dachshundtablayoutsample;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -39,6 +41,8 @@ public class BottomBarLocation extends Fragment {
 
     Geocoder geocoder;
 
+    Intent intent;
+
     public static int RENEWS_GPS = 1;
     public static int SEND_PRINT = 2;
 
@@ -57,6 +61,17 @@ public class BottomBarLocation extends Fragment {
 
         address = (LinearLayout)view.findViewById(R.id.address);
         myLocation = (TextView)view.findViewById(R.id.myLocation);
+
+        address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                intent = getActivity().getIntent();
+                intent.putExtra("locationThoroughfareAddress", locationThoroughfareAddress);
+                getActivity().setResult(Activity.RESULT_OK, intent);
+
+                getActivity().finish();
+            }
+        });
 
         if(Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 0);
