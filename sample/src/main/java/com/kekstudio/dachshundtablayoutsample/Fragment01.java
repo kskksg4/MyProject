@@ -1,27 +1,34 @@
 package com.kekstudio.dachshundtablayoutsample;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.poliveira.parallaxrecycleradapter.ParallaxRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Created by 성근 on 2017-05-18.
  */
 
 public class Fragment01 extends Fragment {
+
+    private static final int LOCATION_INTENT = 100;
 
     Context mContext;
 
@@ -56,6 +63,14 @@ public class Fragment01 extends Fragment {
                 return 1;
             }
         });
+
+        Bundle bundle = getArguments();
+        if(bundle != null){
+            Double lat = bundle.getDouble("bundleLat");
+            Double lng = bundle.getDouble("bundleLng");
+
+            Log.d("fragmentresult", lat+""+lng);
+        }
 
 
         ParallaxRecyclerAdapter<String> stringAdapter = new ParallaxRecyclerAdapter<String>(content);
@@ -103,4 +118,22 @@ public class Fragment01 extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == LOCATION_INTENT){
+            if(resultCode == RESULT_OK){
+                if(data.hasExtra("lat") && data.hasExtra("lng")){
+                    Double lat = data.getDoubleExtra("lat", 0);
+                    Double lng = data.getDoubleExtra("lng", 0);
+                    Log.d("result", LOCATION_INTENT+"");
+
+                    Toast.makeText(getContext(), lat+"와 "+lng, Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+
 }

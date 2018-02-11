@@ -1,6 +1,5 @@
 package com.kekstudio.dachshundtablayoutsample;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,12 +9,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,8 +38,11 @@ public class SampleActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
     private DachshundTabLayout tabLayout;
+    private PagerAdapter adapter;
 
     int oncreateBottomSelect = 0;
+
+    Fragment f01 = new Fragment01();
 
 
     @Override
@@ -57,8 +57,8 @@ public class SampleActivity extends AppCompatActivity {
 //        actionBar.setTitle("애니몰리");
 
         viewPager = (ViewPager) findViewById(R.id.view_pager);
-        PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new Fragment01(), "Category01");
+        adapter = new PagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(f01, "Category01");
         adapter.addFragment(new Fragment_page(), "Category02");
         adapter.addFragment(new Fragment02(), "Category03");
         viewPager.setAdapter(adapter);
@@ -229,9 +229,27 @@ public class SampleActivity extends AppCompatActivity {
                 }else if(data.hasExtra("locationThoroughfareAddress")){
                     String locationThoroughfareAddress = data.getStringExtra("locationThoroughfareAddress");
                     ((TextView)findViewById(R.id.main_address_text)).setText(locationThoroughfareAddress);
+                    if(data.hasExtra("lat") && data.hasExtra("lng")){
+                        callFragmentResult(requestCode, resultCode, data);
+                    }else{
+                        Toast.makeText(getApplicationContext(), "정확한 위치 정보를 찾을 수 없습니다", Toast.LENGTH_SHORT).show(); // Toast를 Alert으로 바꾸기(환경설정 확인 등)
+                    }
+
                 }
             }
         }
+    }
+
+    private void callFragmentResult(int requestCode, int resultCode, Intent data){
+        Double lat = data.getDoubleExtra("lat", 0);
+        Double lng = data.getDoubleExtra("lng", 0);
+        Log.d("latlng", lat+", "+lng);
+
+        Toast.makeText(getApplicationContext(), lat+", "+lng, Toast.LENGTH_SHORT).show();
+        int request = 100;
+
+        adapter.getItem(0).onActivityResult(request, resultCode, data);
+
     }
 
 }

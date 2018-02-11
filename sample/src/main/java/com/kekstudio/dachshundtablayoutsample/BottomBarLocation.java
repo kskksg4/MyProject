@@ -66,7 +66,10 @@ public class BottomBarLocation extends Fragment {
             @Override
             public void onClick(View view) {
                 intent = getActivity().getIntent();
+                // intent = new Intent();
                 intent.putExtra("locationThoroughfareAddress", locationThoroughfareAddress);
+                intent.putExtra("lat", latitude);
+                intent.putExtra("lng", longitude);
                 getActivity().setResult(Activity.RESULT_OK, intent);
 
                 getActivity().finish();
@@ -101,7 +104,7 @@ public class BottomBarLocation extends Fragment {
             longitude = gps.getLongitude();
 
             myLocation.setText(returnAddress(latitude, longitude));
-            Log.d("why", returnAddress(latitude, longitude));
+//            Log.d("why", returnAddress(latitude, longitude));
         }else{
             gps.showSettingsAlert();
         }
@@ -171,7 +174,6 @@ public class BottomBarLocation extends Fragment {
         try{
             addresses = geocoder.getFromLocation(lat, lon, 1);
 
-            Toast.makeText(getContext(), lat+" "+lon, Toast.LENGTH_SHORT).show();
             if(addresses != null && addresses.size() > 0){
 //                currentLocationAddress = addresses.get(0).getAddressLine(0); // 주소 전체(대한민국 서울특별시 00구 00동 00-00)
                 Address currentLocationAddress = addresses.get(0);
