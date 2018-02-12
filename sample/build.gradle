@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.kekstudio.dachshundtablayoutsample"
         minSdkVersion 15
@@ -31,5 +32,6 @@ dependencies {
     compile 'com.roughike:bottom-bar:2.3.1'
     compile 'com.github.kanytu:android-parallax-recyclerview:v1.2'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
+    compile'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
     testCompile 'junit:junit:4.12'
 }
