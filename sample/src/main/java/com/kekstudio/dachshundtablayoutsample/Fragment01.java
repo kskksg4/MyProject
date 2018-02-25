@@ -277,7 +277,9 @@ public class Fragment01 extends Fragment {
         protected void onPostExecute(ArrayList<Store> stores) {
             super.onPostExecute(stores);
 
-            Log.d("stores", stores+"");
+//            for(int i=0; i<stores.size(); i++){
+//                Log.d("stores", stores+"");
+//            }
         }
     }
 

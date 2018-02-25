@@ -243,7 +243,7 @@ public class SampleActivity extends AppCompatActivity {
     private void callFragmentResult(int requestCode, int resultCode, Intent data){
         Double lat = data.getDoubleExtra("lat", 0);
         Double lng = data.getDoubleExtra("lng", 0);
-        Log.d("latlng", lat+", "+lng);
+        Log.d("stores", lat+", "+lng);
 
         Toast.makeText(getApplicationContext(), lat+", "+lng, Toast.LENGTH_SHORT).show();
         int request = 100;
