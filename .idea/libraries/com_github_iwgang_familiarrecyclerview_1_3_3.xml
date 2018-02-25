@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="com.github.iwgang:familiarrecyclerview-1.3.3">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/sample/build/intermediates/exploded-aar/com.github.iwgang/familiarrecyclerview/1.3.3/res" />
+      <root url="jar://$PROJECT_DIR$/sample/build/intermediates/exploded-aar/com.github.iwgang/familiarrecyclerview/1.3.3/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.iwgang/familiarrecyclerview/1.3.3/1c63fbbc77ada21b1247da71d234b072cb0e31a3/familiarrecyclerview-1.3.3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
