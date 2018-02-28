@@ -10,6 +10,12 @@ public class Store {
     private String lat;
     private String lng;
 
+    public Store(){}
+
+    public Store(String storeName) { // 생성자 임시로 만든거다 반드시 수정 후 지울것
+        this.storeName = storeName;
+    }
+
     public String getStoreName() {
         return storeName;
     }

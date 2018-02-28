@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,7 +38,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Vector;
 
 import cn.iwgang.familiarrecyclerview.FamiliarRecyclerView;
@@ -61,6 +59,8 @@ public class Fragment01 extends Fragment {
 
     Context mContext;
 
+    ParallaxRecyclerAdapter<Store> adapter;
+
     /*
     * 스크롤 처리 관련 변수
     **/
@@ -69,6 +69,8 @@ public class Fragment01 extends Fragment {
     boolean firstDragFlag = true;
     boolean motionFlag = true;
     boolean dragFlag = false; //현재 터치가 드래그인지 먼저 확인//
+
+    ArrayList<Store> content;
 
     public Fragment01(){}
 
@@ -93,9 +95,9 @@ public class Fragment01 extends Fragment {
         recyclerView.setLayoutManager(manager); // RecyclerView에 붙이는 것이다 ListView로 사용한다는 의미
         recyclerView.setHasFixedSize(true); // RecyclerView의 사이즈를 고정시키는것 같다 http://itpangpang.xyz/31
 
-        final List<String> content = new ArrayList<String>(); // content라는 변수에 리스트형 배열 객체를 생성하고
+        content = new ArrayList<Store>(); // content라는 변수에 리스트형 배열 객체를 생성하고
         for (int i = 0; i < 30; i++)
-            content.add(getListString(i));
+            content.add(new Store(getListString(i)));
 
         // 그리드뷰의 span을 합쳐주거나 2개
         manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -178,16 +180,20 @@ public class Fragment01 extends Fragment {
             }
         });
 
-        ParallaxRecyclerAdapter<String> stringAdapter = new ParallaxRecyclerAdapter<String>(content);
-        stringAdapter.implementRecyclerAdapterMethods(new ParallaxRecyclerAdapter.RecyclerAdapterMethods() {
+        adapter = new ParallaxRecyclerAdapter<>(content);
+        adapter.implementRecyclerAdapterMethods(new ParallaxRecyclerAdapter.RecyclerAdapterMethods() {
             @Override
             public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
-                ((TextView) viewHolder.itemView).setText(content.get(i));
+
+                final SimpleViewHolder simpleViewHolder = (SimpleViewHolder)viewHolder;
+
+                simpleViewHolder.storeName.setText(content.get(i).getStoreName());
+
             }
 
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-                return new SimpleViewHolder(getActivity().getLayoutInflater().inflate(android.R.layout.simple_list_item_1, viewGroup, false));
+                return new SimpleViewHolder(getActivity().getLayoutInflater().inflate(R.layout.store_recyclerview, viewGroup, false));
             }
 
             @Override
@@ -196,22 +202,27 @@ public class Fragment01 extends Fragment {
             }
         });
 
-        stringAdapter.setParallaxHeader(inflater.inflate(R.layout.my_header, refresh, false), recyclerView);
-        stringAdapter.setOnParallaxScroll(new ParallaxRecyclerAdapter.OnParallaxScroll() {
+        adapter.setParallaxHeader(inflater.inflate(R.layout.my_header, refresh, false), recyclerView);
+        adapter.setOnParallaxScroll(new ParallaxRecyclerAdapter.OnParallaxScroll() {
             @Override
             public void onParallaxScroll(float percentage, float offset, View parallax) {
                 //TODO: implement toolbar alpha. See README for details
             }
         });
-        refresh.setAdapter(stringAdapter);
+        refresh.setAdapter(adapter);
 
         return view;
     }
 
     static class SimpleViewHolder extends RecyclerView.ViewHolder {
 
+        private TextView storeName;
+
         public SimpleViewHolder(View itemView) {
             super(itemView);
+
+            storeName = (TextView)itemView.findViewById(R.id.store_recyclerview_store_name);
+
         }
     }
 
@@ -358,9 +369,15 @@ public class Fragment01 extends Fragment {
         protected void onPostExecute(ArrayList<Store> stores) {
             super.onPostExecute(stores);
 
-//            for(int i=0; i<stores.size(); i++){
-//                Log.d("stores", stores+"");
-//            }
+            if(content.size() > 0){
+                content.clear();
+
+                content = stores;
+                for(int i=0; i<content.size(); i++){
+                    adapter.setData(content);
+                }
+            }
+
         }
     }
 
