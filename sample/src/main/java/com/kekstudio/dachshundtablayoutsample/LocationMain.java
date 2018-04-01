@@ -10,6 +10,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.View;
 
 import com.kekstudio.dachshundtablayout.DachshundTabLayout;
 
@@ -25,15 +28,14 @@ public class LocationMain extends AppCompatActivity {
     private ViewPager location_main_viewpager;
     private DachshundTabLayout location_main_tabLayout;
 
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.location_main);
 
         setSupportActionBar((Toolbar)findViewById(R.id.location_main_toolbar));
-
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("내 위치");
 
         location_main_viewpager = (ViewPager)findViewById(R.id.location_main_viewpager);
         PagerAdapter adapter2 = new PagerAdapter(getSupportFragmentManager());
@@ -44,6 +46,24 @@ public class LocationMain extends AppCompatActivity {
         location_main_tabLayout = (DachshundTabLayout)findViewById(R.id.location_main_tabLayout);
         location_main_tabLayout.setupWithViewPager(location_main_viewpager);
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        ActionBar actionBar = getSupportActionBar();
+
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowHomeEnabled(false);
+
+        LayoutInflater inflater = (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
+        View actionBarView = inflater.inflate(R.layout.actionbar_location_main_custom, null);
+
+        actionBar.setCustomView(actionBarView);
+
+        return true;
     }
 
     public class PagerAdapter extends FragmentStatePagerAdapter {

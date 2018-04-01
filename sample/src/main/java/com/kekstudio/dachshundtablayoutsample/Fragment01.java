@@ -72,6 +72,8 @@ public class Fragment01 extends Fragment {
 
     ArrayList<Store> content;
 
+    private FamiliarRecyclerView recyclerView;
+
     public Fragment01(){}
 
 //    public Fragment01(Context context){
@@ -85,13 +87,12 @@ public class Fragment01 extends Fragment {
 
         final FamiliarRefreshRecyclerView refresh = (FamiliarRefreshRecyclerView) view.findViewById(R.id.myRecycler);
         final FloatingActionButton topupButton = (FloatingActionButton)view.findViewById(R.id.fragment01_topbutton);
-        final FamiliarRecyclerView recyclerView;
+
 
         topupButton.setVisibility(View.GONE);
 
         recyclerView = refresh.getFamiliarRecyclerView();
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 2); // ListView를 쓰기위해 LinearLayoutManager를 사용
-//        manager.setOrientation(LinearLayoutManager.VERTICAL); // ListView의 orirentation값인가?
         recyclerView.setLayoutManager(manager); // RecyclerView에 붙이는 것이다 ListView로 사용한다는 의미
         recyclerView.setHasFixedSize(true); // RecyclerView의 사이즈를 고정시키는것 같다 http://itpangpang.xyz/31
 
@@ -154,7 +155,7 @@ public class Fragment01 extends Fragment {
                             // 시작Y가 끝 Y보다 크다면 터치가 아래서 위로 이루어졌다는 것이고, 스크롤은 아래로내려갔다는 뜻이다.
                             if ((startYPosition > endYPosition) && (startYPosition - endYPosition) > 10) {
                                 topupButton.setVisibility(View.VISIBLE);
-                            }else if((startYPosition < endYPosition) && (endYPosition - startYPosition) > 10){ //시작 Y가 끝 보다 작다면 터치가 위에서 아래로 이러우졌다는 것이고, 스크롤이 올라갔다는 뜻이다.
+                            }else if((startYPosition < endYPosition) && (endYPosition - startYPosition) > 10){ //시작 Y가 끝 보다 작다면 터치가 위에서 아래로 이루어졌다는 것이고, 스크롤이 올라갔다는 뜻이다.
                                 topupButton.setVisibility(View.GONE);
                             }
                         }
@@ -247,13 +248,23 @@ public class Fragment01 extends Fragment {
                     Log.d("result", LOCATION_INTENT+"");
 
                     Toast.makeText(getContext(), lat+"와 "+lng, Toast.LENGTH_SHORT).show();
-                    new HttpTask().execute();
+                    new HttpTask(lat, lng).execute();
                 }
             }
         }
     }
 
-    private class HttpTask extends AsyncTask<Void, Void, ArrayList<Store>>{
+    public class HttpTask extends AsyncTask<Void, Void, ArrayList<Store>>{
+
+        Double latitude;
+        Double longitude;
+
+        public HttpTask(){}
+
+        public HttpTask(Double latitude, Double longitude) {
+            this.latitude = latitude;
+            this.longitude = longitude;
+        }
 
         @Override
         protected ArrayList<Store> doInBackground(Void... voids) {
@@ -268,8 +279,8 @@ public class Fragment01 extends Fragment {
                 XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
                 XmlPullParser xmlPullParser = factory.newPullParser();
 
-                nameValue.add(new BasicNameValuePair("lat", Double.toString(lat)));
-                nameValue.add(new BasicNameValuePair("lng", Double.toString(lng)));
+                nameValue.add(new BasicNameValuePair("lat", Double.toString(latitude)));
+                nameValue.add(new BasicNameValuePair("lng", Double.toString(longitude)));
 
                 HttpEntity enty = new UrlEncodedFormEntity(nameValue, HTTP.UTF_8);
 
@@ -368,15 +379,22 @@ public class Fragment01 extends Fragment {
         @Override
         protected void onPostExecute(ArrayList<Store> stores) {
             super.onPostExecute(stores);
+            Log.d("sea4", stores.size()+"");
+            if(stores.size() <= 0){
+                Toast.makeText(getContext(), "주변에 업소가 없어요", Toast.LENGTH_SHORT).show(); // 여기에 Toast말고 Custom Dialog로 구현하기
+            }else{
+                if(content.size() > 0){
+                    content.clear();
+//                recyclerView.getRecycledViewPool().clear();
 
-            if(content.size() > 0){
-                content.clear();
-
-                content = stores;
-                for(int i=0; i<content.size(); i++){
-                    adapter.setData(content);
+                    content = stores;
+                    for(int i=0; i<content.size(); i++){
+                        Log.d("sea5", content.size()+"");
+                        adapter.setData(content);
+                    }
                 }
             }
+
 
         }
     }

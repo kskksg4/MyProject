@@ -22,7 +22,9 @@
             android:layout_height="wrap_content"
             custom:ddAnimatedIndicator="dachshund"
             custom:ddIndicatorHeight="6dp"
-            custom:ddIndicatorColor="@android:color/white"
+            custom:ddIndicatorColor="@color/colorAccent"
+            custom:tabTextColor="@color/colorPrimaryDark"
+            custom:tabSelectedTextColor="@color/colorAccent"
             custom:tabMode="fixed"
             />
 

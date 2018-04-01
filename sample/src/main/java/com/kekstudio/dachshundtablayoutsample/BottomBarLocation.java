@@ -14,7 +14,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +21,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.kekstudio.dachshundtablayoutsample.GPS.GPSTracker;
 
 import java.io.IOException;
 import java.util.List;
@@ -111,54 +112,6 @@ public class BottomBarLocation extends Fragment {
 
         return view;
     }
-
-//    @Override
-//    protected void onCreate(@Nullable Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.bottombar_location);
-//
-//        address = (LinearLayout)findViewById(R.id.address);
-//        myLocation = (TextView)findViewById(R.id.myLocation);
-//
-//        if(Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-//            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 0);
-//        }
-//
-//        mHandler = new Handler(){
-//            @Override
-//            public void handleMessage(Message msg) {
-//                if(msg.what == RENEWS_GPS){
-//                    makeNewGpsService();
-//                }
-//
-//                if(msg.what == SEND_PRINT){
-//                    Toast.makeText(getApplicationContext(), (String)msg.obj, Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        };
-//
-//        if(gps == null){
-//            gps = new GPSTracker(BottomBarLocation.this, mHandler);
-//        }else{
-//            gps.update();
-//        }
-//
-//        if(gps.canGetLocation()){
-//            latitude = gps.getLatitude();
-//            longitude = gps.getLongitude();
-//
-//            myLocation.setText(returnAddress(latitude, longitude));
-//            Log.d("why", returnAddress(latitude, longitude));
-//        }else{
-//            gps.showSettingsAlert();
-//        }
-//    }
-
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//        // remove location, intent로 값 넘겨주기
-//    }
 
     public void makeNewGpsService(){
         if(gps == null){

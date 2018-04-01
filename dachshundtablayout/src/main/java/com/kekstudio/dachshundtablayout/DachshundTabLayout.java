@@ -57,7 +57,7 @@ public class DachshundTabLayout extends TabLayout implements ViewPager.OnPageCha
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.DachshundTabLayout);
 
         this.indicatorHeight = a.getDimensionPixelSize(R.styleable.DachshundTabLayout_ddIndicatorHeight, HelperUtils.dpToPx(DEFAULT_HEIGHT_DP));
-        this.indicatorColor = a.getColor(R.styleable.DachshundTabLayout_ddIndicatorColor, Color.WHITE);
+        this.indicatorColor = a.getColor(R.styleable.DachshundTabLayout_ddIndicatorColor, Color.BLACK);
 
         AnimatedIndicatorType animatedIndicatorType = AnimatedIndicatorType.values()[a.getInt(R.styleable.DachshundTabLayout_ddAnimatedIndicator, 0)];
 

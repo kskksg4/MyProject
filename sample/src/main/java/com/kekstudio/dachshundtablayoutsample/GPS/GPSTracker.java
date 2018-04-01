@@ -1,4 +1,4 @@
-package com.kekstudio.dachshundtablayoutsample;
+package com.kekstudio.dachshundtablayoutsample.GPS;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -18,6 +18,8 @@ import android.os.Message;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+
+import com.kekstudio.dachshundtablayoutsample.BottomBarLocation;
 
 /**
  * Created by 성근 on 2017-07-23.

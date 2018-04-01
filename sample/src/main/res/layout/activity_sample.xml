@@ -26,7 +26,9 @@
                 android:layout_height="wrap_content"
                 custom:ddAnimatedIndicator="dachshund"
                 custom:ddIndicatorHeight="6dp"
-                custom:ddIndicatorColor="@android:color/white"
+                custom:ddIndicatorColor="@color/colorAccent"
+                custom:tabTextColor="@color/colorPrimaryDark"
+                custom:tabSelectedTextColor="@color/colorAccent"
                 custom:tabMode="fixed"/>
             <!-- tabmode는 스크롤이 필요하면 scrollable, 일정 비율로 한 화면에 전체는 fixed -->
 
@@ -43,8 +45,9 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_gravity="bottom"
-        app:bb_tabXmlResource="@xml/bottombar_tabs"
         app:bb_behavior="underNavbar|shy"
+        app:bb_tabXmlResource="@xml/bottombar_tabs"
+        app:bb_activeTabColor="@android:color/black"
         />
 
 </android.support.design.widget.CoordinatorLayout>
