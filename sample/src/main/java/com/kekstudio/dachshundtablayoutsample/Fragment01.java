@@ -52,7 +52,7 @@ import static android.app.Activity.RESULT_OK;
 public class Fragment01 extends Fragment {
 
     private static final int LOCATION_INTENT = 100;
-    private final String URLPATH = "http://116.255.77.198/firstapp/index.php";
+    private final String URLPATH = "http://116.255.78.46/firstapp/index.php";
 
     private double lat;
     private double lng;

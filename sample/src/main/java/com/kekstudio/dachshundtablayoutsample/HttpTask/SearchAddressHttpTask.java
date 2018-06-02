@@ -57,7 +57,7 @@ public class SearchAddressHttpTask extends AsyncTask<Void, Void, ArrayList<Searc
     @Override
     protected ArrayList<SearchAddress[]> doInBackground(Void... voids) {
 
-        String URLPATH = "http://116.255.77.198/firstapp/curl.php";
+        String URLPATH = "http://116.255.78.46/firstapp/curl.php";
         HttpPost request = new HttpPost(URLPATH);
 
         Vector<NameValuePair> nameValue = new Vector<>();
