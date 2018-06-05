@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".actionbarSearchIntent" />
         <activity android:name=".LocationMain" />
-        <activity android:name=".SampleActivity">
+        <activity android:name=".view.main.SampleActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

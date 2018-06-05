@@ -1,15 +1,11 @@
-package com.kekstudio.dachshundtablayoutsample;
+package com.kekstudio.dachshundtablayoutsample.view.main;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -24,13 +20,15 @@ import com.kekstudio.dachshundtablayout.indicators.LineFadeIndicator;
 import com.kekstudio.dachshundtablayout.indicators.LineMoveIndicator;
 import com.kekstudio.dachshundtablayout.indicators.PointFadeIndicator;
 import com.kekstudio.dachshundtablayout.indicators.PointMoveIndicator;
+import com.kekstudio.dachshundtablayoutsample.Fragment01;
+import com.kekstudio.dachshundtablayoutsample.Fragment02;
+import com.kekstudio.dachshundtablayoutsample.Fragment_page;
+import com.kekstudio.dachshundtablayoutsample.LocationMain;
+import com.kekstudio.dachshundtablayoutsample.R;
+import com.kekstudio.dachshundtablayoutsample.view.main.viewpager.adapter.PagerAdapter;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabReselectListener;
 import com.roughike.bottombar.OnTabSelectListener;
-
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class SampleActivity extends AppCompatActivity {
 
@@ -40,10 +38,7 @@ public class SampleActivity extends AppCompatActivity {
     private DachshundTabLayout tabLayout;
     private PagerAdapter adapter;
 
-    int oncreateBottomSelect = 0;
-
-    Fragment f01 = new Fragment01();
-
+    private int oncreateBottomSelect = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +48,9 @@ public class SampleActivity extends AppCompatActivity {
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         BottomBar bottomBar = (BottomBar)findViewById(R.id.bottomBar);
 
-//        ActionBar actionBar = getSupportActionBar();
-//        actionBar.setTitle("애니몰리");
-
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         adapter = new PagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(f01, "Category01");
+        adapter.addFragment(new Fragment01(), "Category01");
         adapter.addFragment(new Fragment_page(), "카테고리2");
         adapter.addFragment(new Fragment02(), "Category03");
         viewPager.setAdapter(adapter);
@@ -129,18 +121,6 @@ public class SampleActivity extends AppCompatActivity {
         return true;
     }
 
-    // 액션바 Search 클릭
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch(item.getItemId()){
-//            case R.id.actionbar_search:
-//                actionBarSearchIntent();
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
-
     public void onClickDachshund(View view){
         tabLayout.setAnimatedIndicator(new DachshundIndicator(tabLayout));
     }
@@ -169,42 +149,6 @@ public class SampleActivity extends AppCompatActivity {
 
         lineFadeIndicator.setSelectedTabIndicatorHeight(HelperUtils.dpToPx(2));
         lineFadeIndicator.setEdgeRadius(0);
-    }
-
-    public class PagerAdapter extends FragmentStatePagerAdapter {
-//        Context mContext;
-
-        private final List<Fragment> mFragments = new ArrayList<>();
-        private final List<String> mFragmentTitles = new ArrayList<>();
-
-        public PagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        public void addFragment(Fragment fragment, String title){
-            mFragments.add(fragment);
-            mFragmentTitles.add(title);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragments.size();
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitles.get(position);
-        }
-    }
-
-    public void actionBarSearchIntent(View v){
-        Intent intent = new Intent(this, actionbarSearchIntent.class);
-        startActivity(intent);
     }
 
     public void bottombarLocationClick(){
@@ -250,5 +194,6 @@ public class SampleActivity extends AppCompatActivity {
         adapter.getItem(0).onActivityResult(request, resultCode, data);
 
     }
+
 
 }
