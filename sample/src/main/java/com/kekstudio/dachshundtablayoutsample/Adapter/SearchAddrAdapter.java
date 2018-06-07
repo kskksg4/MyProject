@@ -78,11 +78,6 @@ public class SearchAddrAdapter extends RecyclerView.Adapter {
 
                     checkRegionRoad(addrType, position);
                 }
-
-//                if((searchAddresses[position].getX() != null) && (searchAddresses[position].getY() != null)){
-//
-//                }
-
             }
         });
 

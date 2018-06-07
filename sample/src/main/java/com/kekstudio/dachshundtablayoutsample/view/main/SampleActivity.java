@@ -20,7 +20,7 @@ import com.kekstudio.dachshundtablayout.indicators.LineFadeIndicator;
 import com.kekstudio.dachshundtablayout.indicators.LineMoveIndicator;
 import com.kekstudio.dachshundtablayout.indicators.PointFadeIndicator;
 import com.kekstudio.dachshundtablayout.indicators.PointMoveIndicator;
-import com.kekstudio.dachshundtablayoutsample.Fragment01;
+import com.kekstudio.dachshundtablayoutsample.fragment.main01.Fragment01;
 import com.kekstudio.dachshundtablayoutsample.Fragment02;
 import com.kekstudio.dachshundtablayoutsample.Fragment_page;
 import com.kekstudio.dachshundtablayoutsample.LocationMain;
