@@ -1,5 +1,6 @@
-package com.kekstudio.dachshundtablayoutsample.view.main;
+package com.kekstudio.dachshundtablayoutsample.main.view;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -25,11 +26,11 @@ import com.kekstudio.dachshundtablayoutsample.Fragment02;
 import com.kekstudio.dachshundtablayoutsample.Fragment_page;
 import com.kekstudio.dachshundtablayoutsample.LocationMain;
 import com.kekstudio.dachshundtablayoutsample.R;
-import com.kekstudio.dachshundtablayoutsample.view.main.viewpager.adapter.PagerAdapter;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabReselectListener;
 import com.roughike.bottombar.OnTabSelectListener;
 
+@SuppressLint("Registered")
 public class SampleActivity extends AppCompatActivity {
 
     private static final int LOCATION_INTENT = 1;
@@ -38,7 +39,7 @@ public class SampleActivity extends AppCompatActivity {
     private DachshundTabLayout tabLayout;
     private PagerAdapter adapter;
 
-    private int oncreateBottomSelect = 0;
+    private int oncreatedBottomSelect = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,11 +67,11 @@ public class SampleActivity extends AppCompatActivity {
             public void onTabSelected(int tabId) {
                 switch(tabId){
                     case R.id.tab_nearby:
-                        if(oncreateBottomSelect == 0){
-                            oncreateBottomSelect = 1;
+                        if(oncreatedBottomSelect == 0){
+                            oncreatedBottomSelect = 1;
                             break;
                         }
-                        bottombarLocationClick();
+                        searchLocationIntent();
                         break;
                     case R.id.tab_account:
                         Toast.makeText(getApplicationContext(), "b", Toast.LENGTH_SHORT).show();
@@ -86,7 +87,7 @@ public class SampleActivity extends AppCompatActivity {
             public void onTabReSelected(int tabId) {
                 switch(tabId){
                     case R.id.tab_nearby:
-                        bottombarLocationClick();
+                        searchLocationIntent();
                         break;
                     case R.id.tab_account:
                         Toast.makeText(getApplicationContext(), "b", Toast.LENGTH_SHORT).show();
@@ -151,14 +152,13 @@ public class SampleActivity extends AppCompatActivity {
         lineFadeIndicator.setEdgeRadius(0);
     }
 
-    public void bottombarLocationClick(){
+    public void searchLocationIntent(){
         Intent intent = new Intent(SampleActivity.this, LocationMain.class);
         startActivityForResult(intent, LOCATION_INTENT);
     }
 
-    public void actionbar_bottombarLocationClick(View v){
-        Intent intent = new Intent(SampleActivity.this, LocationMain.class);
-        startActivityForResult(intent, LOCATION_INTENT);
+    public void actionbar_searchLoctionIntent(View v){
+        searchLocationIntent();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.kekstudio.dachshundtablayoutsample.view.main.viewpager.adapter;
+package com.kekstudio.dachshundtablayoutsample.main.view;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

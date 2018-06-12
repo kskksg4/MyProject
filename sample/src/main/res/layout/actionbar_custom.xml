@@ -21,7 +21,7 @@
         android:textSize="20sp"
         android:text="내 위치"
         android:textColor="@color/colorAccent"
-        android:onClick="actionbar_bottombarLocationClick"
+        android:onClick="actionbar_searchLoctionIntent"
         />
 
 </RelativeLayout>

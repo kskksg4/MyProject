@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +14,7 @@ import android.view.Menu;
 import android.view.View;
 
 import com.kekstudio.dachshundtablayout.DachshundTabLayout;
+import com.kekstudio.dachshundtablayoutsample.location.gps.GPSLocation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +28,6 @@ public class LocationMain extends AppCompatActivity {
     private ViewPager location_main_viewpager;
     private DachshundTabLayout location_main_tabLayout;
 
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +37,7 @@ public class LocationMain extends AppCompatActivity {
 
         location_main_viewpager = (ViewPager)findViewById(R.id.location_main_viewpager);
         PagerAdapter adapter2 = new PagerAdapter(getSupportFragmentManager());
-        adapter2.addFragment(new BottomBarLocation(), "현재 위치");
+        adapter2.addFragment(new GPSLocation(), "현재 위치");
         adapter2.addFragment(new SearchLocation(), "주소 검색");
         location_main_viewpager.setAdapter(adapter2);
 
@@ -67,7 +65,6 @@ public class LocationMain extends AppCompatActivity {
     }
 
     public class PagerAdapter extends FragmentStatePagerAdapter {
-//        Context mContext;
 
         private final List<Fragment> mFragments = new ArrayList<>();
         private final List<String> mFragmentTitles = new ArrayList<>();

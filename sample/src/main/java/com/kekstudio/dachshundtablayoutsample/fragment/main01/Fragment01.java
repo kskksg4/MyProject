@@ -37,9 +37,6 @@ public class Fragment01 extends Fragment implements Fragment01Contract.View{
 
     private static final int LOCATION_INTENT = 100;
 
-    private double lat;
-    private double lng;
-
     @SuppressLint("StaticFieldLeak")
     public static ParallaxRecyclerAdapter<Store> adapter;
     public static ArrayList<Store> content;
@@ -217,8 +214,8 @@ public class Fragment01 extends Fragment implements Fragment01Contract.View{
         if(requestCode == LOCATION_INTENT){
             if(resultCode == RESULT_OK){
                 if(data.hasExtra("lat") && data.hasExtra("lng")){
-                    lat = data.getDoubleExtra("lat", 0);
-                    lng = data.getDoubleExtra("lng", 0);
+                    Double lat = data.getDoubleExtra("lat", 0);
+                    Double lng = data.getDoubleExtra("lng", 0);
                     Log.d("result", LOCATION_INTENT+"");
 
                     Toast.makeText(getContext(), lat+"와 "+lng, Toast.LENGTH_SHORT).show();

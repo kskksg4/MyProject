@@ -19,7 +19,7 @@ import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 
-import com.kekstudio.dachshundtablayoutsample.BottomBarLocation;
+import com.kekstudio.dachshundtablayoutsample.location.gps.GPSLocation;
 
 /**
  * Created by 성근 on 2017-07-23.
@@ -190,10 +190,10 @@ public class GPSTracker extends Service implements LocationListener {
 
     }
 
-    private void sendString(String str){
-        Message msg = mHandler.obtainMessage();
-        msg.what = BottomBarLocation.SEND_PRINT;
-        msg.obj = new String(str);
-        mHandler.sendMessage(msg);
-    }
+//    private void sendString(String str){
+//        Message msg = mHandler.obtainMessage();
+//        msg.what = GPSLocation.SEND_PRINT;
+//        msg.obj = new String(str);
+//        mHandler.sendMessage(msg);
+//    }
 }
