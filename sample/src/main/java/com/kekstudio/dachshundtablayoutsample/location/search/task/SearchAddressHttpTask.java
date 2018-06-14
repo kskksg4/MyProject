@@ -1,4 +1,4 @@
-package com.kekstudio.dachshundtablayoutsample.HttpTask;
+package com.kekstudio.dachshundtablayoutsample.location.search.task;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -8,10 +8,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.kekstudio.dachshundtablayoutsample.Adapter.SearchAddrAdapter;
+import com.kekstudio.dachshundtablayoutsample.location.search.adapter.SearchAddrAdapter;
 import com.kekstudio.dachshundtablayoutsample.Constructor.SearchAddress;
 import com.kekstudio.dachshundtablayoutsample.Constructor.MetaAddr;
-import com.kekstudio.dachshundtablayoutsample.SearchLocation;
+import com.kekstudio.dachshundtablayoutsample.location.search.SearchLocation;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -47,18 +47,21 @@ public class SearchAddressHttpTask extends AsyncTask<Void, Void, ArrayList<Searc
 
     private Gson gson = new Gson();
 
+    private SearchAddrAdapter adapter;
+
     public SearchAddressHttpTask(){}
 
-    public SearchAddressHttpTask(String addr, Context context){
+    public SearchAddressHttpTask(String addr, Context context, SearchAddrAdapter adapter){
         this.addr = addr;
         this.context = context;
+        this.adapter = adapter;
     }
 
     @Override
     protected ArrayList<SearchAddress[]> doInBackground(Void... voids) {
 
-        String URLPATH = "http://116.255.78.46/firstapp/curl.php";
-        HttpPost request = new HttpPost(URLPATH);
+        String urlpath = "http://116.255.78.46/firstapp/curl.php";
+        HttpPost request = new HttpPost(urlpath);
 
         Vector<NameValuePair> nameValue = new Vector<>();
 
@@ -81,10 +84,8 @@ public class SearchAddressHttpTask extends AsyncTask<Void, Void, ArrayList<Searc
 
             JsonObject data = jsonParser.parse(reader).getAsJsonObject();
             gson.fromJson(data.get("meta"), MetaAddr.class);
-//            Log.d("se", data.get("meta")+"");
 
             JsonArray addrData = (JsonArray) data.get("documents");
-//            Log.d("sea0", addrData+"");
 
             if(addrData != null){ // 검색시 주소 데이터가 null이 아닐 때,
 
@@ -94,8 +95,6 @@ public class SearchAddressHttpTask extends AsyncTask<Void, Void, ArrayList<Searc
             }else{
 
             }
-
-//            Log.d("sea1", arrayList.size()+"");
 
             im.close();
 
@@ -115,11 +114,7 @@ public class SearchAddressHttpTask extends AsyncTask<Void, Void, ArrayList<Searc
     protected void onPostExecute(ArrayList<SearchAddress[]> searchAddresses) {
         super.onPostExecute(searchAddresses);
 
-        Log.d("sea06", searchAddresses.size()+"");
-        SearchAddrAdapter searchAddrAdapter = new SearchAddrAdapter();
-        searchAddrAdapter.setData(searchAddresses, context, nullCheckFlag);
-
-        SearchLocation.searchLocationRecyclerView.setAdapter(searchAddrAdapter);
+        adapter.setData(searchAddresses, context, nullCheckFlag);
     }
 
     private void parseJsonAddr(JsonArray addrData) {

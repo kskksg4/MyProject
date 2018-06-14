@@ -71,4 +71,11 @@ public class GPSLocation extends Fragment implements GPSLocationContract.View{
         Log.d("abc", message);
         myLocation.setText(message);
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        presenter.detachView();
+    }
 }

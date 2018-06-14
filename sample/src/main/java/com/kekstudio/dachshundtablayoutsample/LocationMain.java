@@ -15,6 +15,7 @@ import android.view.View;
 
 import com.kekstudio.dachshundtablayout.DachshundTabLayout;
 import com.kekstudio.dachshundtablayoutsample.location.gps.GPSLocation;
+import com.kekstudio.dachshundtablayoutsample.location.search.SearchLocation;
 
 import java.util.ArrayList;
 import java.util.List;

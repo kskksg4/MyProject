@@ -1,4 +1,4 @@
-package com.kekstudio.dachshundtablayoutsample;
+package com.kekstudio.dachshundtablayoutsample.location.search;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -15,25 +15,31 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.kekstudio.dachshundtablayoutsample.HttpTask.SearchAddressHttpTask;
+import com.kekstudio.dachshundtablayoutsample.location.search.adapter.SearchAddrAdapter;
+import com.kekstudio.dachshundtablayoutsample.location.search.presenter.SearchLocationContract;
+import com.kekstudio.dachshundtablayoutsample.location.search.presenter.SearchLocationPresenter;
+import com.kekstudio.dachshundtablayoutsample.location.search.task.SearchAddressHttpTask;
 import com.kekstudio.dachshundtablayoutsample.Listener.ItemClickListener;
+import com.kekstudio.dachshundtablayoutsample.R;
 
-public class SearchLocation extends Fragment {
+public class SearchLocation extends Fragment implements SearchLocationContract.View{
 
-    View view;
+    private LinearLayoutManager searchLocationRecyclerLayoutManager;
+    private RecyclerView searchLocationRecyclerView;
 
-    LinearLayoutManager searchLocationRecyclerLayoutManager;
-    public static RecyclerView searchLocationRecyclerView;
+    private EditText searchLocationEdittext;
 
-    EditText searchLocationEdittext;
-
-    SearchAddressHttpTask searchAddressHttpTask;
+    private SearchLocationPresenter presenter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.search_location, null);
+        View view = inflater.inflate(R.layout.search_location, null);
+
+        presenter = new SearchLocationPresenter();
+        presenter.attachView(this);
 
         final InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -49,7 +55,7 @@ public class SearchLocation extends Fragment {
                 if(actionId == EditorInfo.IME_ACTION_SEARCH){
                     imm.hideSoftInputFromWindow(searchLocationEdittext.getWindowToken(), 0); // 키보드 돋보기 클릭시 키보드 "hide"
 
-                    searchAddressHttpTask = (SearchAddressHttpTask) new SearchAddressHttpTask(v.getText().toString(), getContext()).execute();
+                    presenter.restapiTask(v.getText().toString(), getContext());
                 }
 
                 return false;
@@ -59,37 +65,23 @@ public class SearchLocation extends Fragment {
         return view;
     }
 
-    public static class SearchLocationViewholder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    @Override
+    public void showToast(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
 
-        public TextView searchLocationRegion;
-        public TextView searchLocationRoad;
-
-        private ItemClickListener itemClickListener;
-
-        public SearchLocationViewholder(View itemView) {
-            super(itemView);
-
-            searchLocationRegion = (TextView)itemView.findViewById(R.id.search_location_recyclerView_region);
-            searchLocationRoad = (TextView)itemView.findViewById(R.id.search_location_recyclerView_road);
-
-            itemView.setOnClickListener(this);
-
-        }
-
-        public void setItemClickListener(ItemClickListener itemClickListener){
-            this.itemClickListener = itemClickListener;
-        }
-
-        @Override
-        public void onClick(View v) {
-            itemClickListener.onClick(v, getAdapterPosition());
-        }
+    @Override
+    public void settingAdapter(SearchAddrAdapter adapter) {
+        searchLocationRecyclerView.setAdapter(adapter);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
 
+        presenter.detachView();
 //        searchAddressHttpTask.cancel(true);
     }
+
+
 }

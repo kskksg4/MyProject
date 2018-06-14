@@ -21,7 +21,7 @@ public class GPSLocationPresenter implements GPSLocationContract.Presenter {
 
     @Override
     public void detachView() {
-        this.view = null;
+        view = null;
     }
 
     @Override
