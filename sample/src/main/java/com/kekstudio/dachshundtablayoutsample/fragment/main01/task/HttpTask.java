@@ -86,10 +86,8 @@ public class HttpTask extends AsyncTask<Void, Void, ArrayList<Store>> {
             while(eventType != XmlPullParser.END_DOCUMENT){
                 switch(eventType){
                     case XmlPullParser.START_DOCUMENT:
-                        Log.d("XML", "xmlStart");
                         break;
                     case XmlPullParser.START_TAG:
-                        Log.d("XML", "StartTag : "+xmlPullParser.getName());
 
                         try{
                             String startTag = xmlPullParser.getName();
@@ -100,34 +98,24 @@ public class HttpTask extends AsyncTask<Void, Void, ArrayList<Store>> {
 
                             if(startTag.equals("name")){
                                 store.setStoreName(xmlPullParser.nextText());
-                                Log.d("XML", "id"+xmlPullParser.getName());
-                                Log.d("XML", "id"+xmlPullParser.getName());
-                                Log.d("store", store.getStoreName());
                             }
 
                             if(startTag.equals("address")){
                                 store.setAddress(xmlPullParser.nextText());
-                                Log.d("XML", "id"+xmlPullParser.getName());
-                                Log.d("XML", "id"+xmlPullParser.getName());
                             }
 
                             if(startTag.equals("lat")){
                                 store.setLat(xmlPullParser.nextText());
-                                Log.d("XML", "id"+xmlPullParser.getName());
-                                Log.d("XML", "id"+xmlPullParser.getName());
                             }
 
                             if(startTag.equals("lng")){
                                 store.setLng(xmlPullParser.nextText());
-                                Log.d("XML", "id"+xmlPullParser.getName());
-                                Log.d("XML", "id"+xmlPullParser.getName());
                             }
                         }catch(Exception e){
                             e.printStackTrace();
                         }
                         break;
                     case XmlPullParser.END_TAG:
-                        Log.d("XML", "EndTag"+xmlPullParser.getName());
 
                         String endTag = xmlPullParser.getName();
 
